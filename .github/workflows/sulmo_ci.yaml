@@ -27,7 +27,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          token: ${{ secrets.PAT_TOKEN }}
+          token: ${{ secrets.MY_TOKEN }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -73,7 +73,7 @@ jobs:
         if: steps.check_changes.outputs.changed == 'true'
         uses: ad-m/github-push-action@master
         with:
-          github_token: ${{ secrets.PAT_TOKEN }}
+          github_token: ${{ secrets.MY_TOKEN }}
           branch: ${{ github.ref }}
 
   checking:
@@ -83,7 +83,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          token: ${{ secrets.PAT_TOKEN }}
+          token: ${{ secrets.MY_TOKEN }}
 
       - name: ls
         run: ls
