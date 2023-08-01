@@ -88,9 +88,12 @@ jobs:
       - name: ls
         run: ls
 
+      - name: pwd
+        run: pwd
+
       - name: Log File Contents
         run: |
-          file_path="/home/runner/work/vue/package.json"
+          file_path="./package.json"
           
           cat "$file_path"
 
