@@ -111,7 +111,8 @@ export default {
       // }).catch((error) => {
       //   console.log(error);
       // });
-      window.location.replace('http://20.0.106.46:8000/login/')
+      console.log('saml login');
+      window.location.replace('http://saml.atable-lab.co.kr/login/')
     }
   }
 }
