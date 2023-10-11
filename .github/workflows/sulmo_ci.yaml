@@ -108,5 +108,6 @@ jobs:
         with:
           context: .
           push: true
+          platforms: ${{ env.ARCH }}
           tags: sulmo/vue-app:${{ env.VERSION }}
 
