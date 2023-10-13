@@ -70,17 +70,23 @@ jobs:
           git diff --exit-code --quiet || echo "::set-output name=changed::true"
         continue-on-error: true
 
-      - name: Commit changes
+      - name: Commit changes and Get current commit SHA
         if: steps.check_changes.outputs.changed == 'true'
+        id: get_sha
         run: |
           git commit -am "chore: version ${{ env.VERSION }}"
-
+          echo "::set-output name=sha::$(git rev-parse HEAD)"
+          
       - name: Push changes
         if: steps.check_changes.outputs.changed == 'true'
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.MY_TOKEN }}
           branch: ${{ github.ref }}
+
+      - name: Set NEW_COMMIT_SHA env variable
+        if: steps.check_changes.outputs.changed == 'true'
+        run: echo "NEW_COMMIT_SHA=${{ steps.get_sha.outputs.sha }}" >> $GITHUB_ENV
 
       - name: Install dependencies
         run: npm install
@@ -110,4 +116,21 @@ jobs:
           push: true
           platforms: ${{ env.ARCH }}
           tags: sulmo/vue-app:${{ env.VERSION }}
+    
+  tagging:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ env.NEW_COMMIT_SHA }}
 
+      - name: Configure git
+        run: |  
+          git config --global user.email "${{ vars.GIT_EMAIL }}"
+          git config --global user.name "${{ vars.GIT_USERNAME }}"
+      - name: Git tagging
+        run: |
+          git tag ${{ env.VERSION }}
+          git push origin ${{ env.VERSION }}
