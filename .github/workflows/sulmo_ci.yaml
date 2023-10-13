@@ -124,6 +124,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
+          github_token: ${{ secrets.MY_TOKEN }}
           ref: ${{ env.NEW_COMMIT_SHA }}
 
       - name: Configure git
