@@ -123,8 +123,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          ref: ${{ env.NEW_COMMIT_SHA }}
+        # with:
+        #   ref: ${{ env.NEW_COMMIT_SHA }}
 
       - name: Configure git
         run: |  
