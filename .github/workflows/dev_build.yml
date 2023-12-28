@@ -5,7 +5,6 @@ on:
 
 env:
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-  BRANCH: ${{ github.event.inputs.branch }}
 
 jobs:
   docker:
@@ -15,7 +14,7 @@ jobs:
     steps:
       - name: log
         run: |
-          echo "BRANCH: $BRANCH"
+          echo "BRANCH: ${{ github.event.inputs.branch }}"
 
       - name: Checkout
         uses: actions/checkout@v3
