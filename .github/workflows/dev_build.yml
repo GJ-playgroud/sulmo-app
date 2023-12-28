@@ -2,10 +2,6 @@ name: "[Dispatch] Dev build"
 
 on:
   workflow_dispatch:
-    inputs:
-      branch:
-        description: 'Branch name'
-        required: true
 
 env:
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -18,9 +14,9 @@ jobs:
     steps:
       - name: log
         run: |
-          echo "BRANCH: ${{ github.event.inputs.branch }}"
+          echo "BRANCH: ${{ github.ref }}"
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          ref: ${{ github.event.inputs.branch }}
+          ref: ${{ github.ref }}
           submodules: recursive
