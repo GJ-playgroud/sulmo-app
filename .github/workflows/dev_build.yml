@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
 
 env:
-  BRANCH: master
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+  BRANCH: ${{ github.event.inputs.branch }}
 
 jobs:
   docker:
